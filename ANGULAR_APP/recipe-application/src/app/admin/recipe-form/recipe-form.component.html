@@ -1,0 +1,83 @@
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="margin-20">
+      <h4>Add Recipe</h4>
+    </div>
+    <form  [formGroup]="tripForm" (ngSubmit)="save(tripForm)">
+        <div class="form-group">
+            <label>Name of the Recipe</label>
+            <input type="text" class="form-control" formControlName="name" >
+            <div class="help-block"  *ngIf="name.touched && name.invalid">
+                        <div *ngIf="name.errors.required" class="alert alert-danger">
+                            Name is required.
+                        </div>
+                        
+            </div>
+            
+        </div>
+        <div class="form-group">
+            <label>Add Ingredients</label>
+            <button type="button" class="circular ui icon button" (click)="addIngredients()">
+                <i class="icon plus">ADD</i>
+            </button>
+          
+         <ul class="list-group" formArrayName="ingredients">
+                <div *ngFor="let ingredient of tripForm.controls['ingredients'].controls; let i = index">
+                  <div class="panel-heading">
+                        <span>Ingredient {{i + 1}}</span>
+                        <span class="justify-content-end" *ngIf="tripForm.controls['ingredients'].controls.length > 1" (click)="removeIngredient(i)" >close</span>
+                  </div>
+                  <div class="panel-body" formGroupName="{{i}}">
+                    <div class="fields">            
+                      <div class="field eight wide">
+                        <label>Ingredient name</label>
+                        <input type="text" formControlName="ingredient">
+                      </div>
+                      
+
+                    </div>
+                  </div>
+                </div>
+          </ul>
+            
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="address" name="description" rows="10" cols="50" formControlName="description">
+            </textarea>
+            <div class="help-block"  *ngIf="description.touched && description.invalid">
+                <div *ngIf="description.errors.required" class="alert alert-danger">
+                    description is required.
+                </div>
+                
+    </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+              <label for="image">Image</label>
+              <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+              
+              <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="diplay">Your Image</label>
+                <h6>your photo will be displayed here</h6>
+
+                <img [src]="url" width="200px" height="200px" *ngIf="url">
+            </div>
+            
+           
+            <div *ngIf="ifNotImage" class="alert alert-danger">
+               Invalid Image format
+            </div>
+              
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary" [disabled]="tripForm.invalid || ifNotImage" >ADD</button>
+        </div>
+    </form>
+  </div>
+</div>
+

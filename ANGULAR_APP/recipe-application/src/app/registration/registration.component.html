@@ -1,0 +1,119 @@
+<div class="row" >
+    <div class="col-xs-12">
+        <app-outer-nav></app-outer-nav>
+    </div>
+</div>
+
+<div class="row">
+
+<div class="col-md-12">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" >
+      <div class="container">
+
+        <div class="row" style="text-align:center">
+          <h1>REGISTRATION FORM</h1>
+        </div>
+        <div class="alert alert-success" *ngIf="successMessage">
+            registered user successfully!
+        </div>
+        <div class="row">
+            <div class="form-group col-md-8">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="fname" name="fname" formControlName="fname">
+                <div class="help-block" 
+                *ngIf="fname.touched && fname.invalid">
+                    <div *ngIf="fname.errors.required" class="alert alert-danger">
+                        First Name is required.
+                    </div>
+                    <div *ngIf="fname.errors.minlength" class="alert alert-danger">
+                        First Name should contain atleast {{ fname.errors.minlength.requiredLength }} characters.
+                    </div>
+                    <div *ngIf="fname.errors.cannotContainSpace" class="alert alert-danger">
+                        First name can not contain spaces. 
+                    </div>
+                </div>
+                
+            </div>
+          
+
+            
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-8">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email"  formControlName="email">
+                <div class="help-block" 
+                *ngIf="email.touched && email.invalid">
+                    <div *ngIf="email.errors.required" class="alert alert-danger">
+                        Email is required
+                    </div>
+                    <div *ngIf="email.errors.email" class="alert alert-danger">
+                        Invalid Email
+                    </div>
+                </div>    
+            </div>
+
+            <div class="form-group col-md-8">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" formControlName="username">
+                <div class="help-block" 
+                *ngIf="username.touched && username.invalid">
+                    <div *ngIf="username.errors.required" class="alert alert-danger">
+                        Username is required.
+                    </div>
+                    <div *ngIf="username.errors.checkUser" class="alert alert-danger">
+                        This username is not available
+                    </div>
+                </div>
+            </div>
+
+           <!-- {{ passwords?.errors?.matchPassword }}-->
+            
+            
+        </div>    
+        <div class="row">
+            <div formGroupName="passwords">
+                <div class="form-group col-md-12">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" formControlName="password">
+                    <div class="help-block" *ngIf="password.touched && password.invalid">
+                        <div *ngIf="password.errors.required" class="alert alert-danger">
+                            Password is required.
+                        </div>
+                        
+                    </div>
+                   
+                </div>
+     
+                <div class="form-group col-md-12">
+                    <label for="cpassword">Confirm Password</label>
+                    <input type="password" class="form-control" id="cpassword" name="cpassword" formControlName="cpassword">
+                    <div class="help-block" *ngIf="cpassword.touched && cpassword.invalid">
+                        <div *ngIf="cpassword.errors.required" class="alert alert-danger">
+                            Re-type password.
+                        </div>
+                   
+                    </div>
+                   
+                </div>
+                
+            </div>
+            <div *ngIf="!passwords.valid" class="help-block">
+                <div *ngIf="passwords?.errors?.matchPassword" class="alert alert-danger">
+                  The two passwords aren't the same
+                </div>
+            </div>
+            
+        </div>
+
+        <div [innerHTML]="myHtml"></div>
+        <div class="form-group">
+              <button name="save" type="submit" class="btn btn-primary" [disabled]="form.invalid">
+                  REGISTER
+              </button>
+        </div>
+      </div>
+  </form>
+</div>
+</div>

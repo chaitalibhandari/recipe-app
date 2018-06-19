@@ -1,0 +1,67 @@
+<div class="row" >
+    <div class="col-md-12">
+        <app-outer-nav></app-outer-nav>
+    </div>
+    <div class="container">
+        <h2>{{ recipe.name | uppercase }}</h2>
+        
+        <div class="card-columns" >
+         
+            <div class="card bg-primary">
+              <div class="card-body text-center">
+                    <img class="card-img-top" src="{{ imageLink }}/{{ recipe.image }}" alt="Card image" style="width:100%">
+                    <div class="card-body">
+                      <h4 class="card-title">{{ recipe.name | uppercase }}</h4>
+                      <h4 class="card-title">Ingredients</h4>
+                      <p>{{ recipe.ingredients}}</p>
+                      <h4 class="card-title">Details</h4>
+                      <p>{{ recipe.description}}</p>
+                     
+                     
+                    </div>
+              </div>
+            </div>
+            <div class="card bg-info">
+                <div class="card-body text-center">
+                      <h2>COMMENTS</h2>
+                      <div class="card-body">
+                        <div *ngFor="let comment of recipe.comments">
+                            <h3>{{ comment.user_name }}</h3>
+                            <p>{{ comment.desc }}</p>
+                        </div>
+                       
+                       
+                      </div>
+                </div>
+            </div>
+            <div class="card bg-success">
+                <div class="card-body text-center">
+                      <h2>ADD COMMENT</h2>
+                      <h6>{{ messageBody }}</h6>
+                      <div class="card-body">
+                        <form [formGroup]="form" (ngSubmit)="onSave()" *ngIf="showCommentBox">
+
+                            <div class="form-group">
+                                <label for="address">COMMENT</label>
+                                <textarea class="form-control" id="revie" name="revie" rows="10" cols="500"formControlName="review">
+                                </textarea>
+                            </div>
+                            <div class="alert alert-danger" *ngIf="revie.invalid && revie.touched">
+                                comment cannot be empty
+                            </div>
+
+                            <button name="save" [disabled]="form.invalid" class="btn btn-primary" >
+                                Submit
+                            </button>
+                        </form>
+                       
+                       
+                      </div>
+                </div>
+            </div>
+            
+           
+    </div>
+    </div>    
+</div>
+
